@@ -1,7 +1,7 @@
 #pragma once
 #include <optional>
 #include "Driver.hpp"
-#include "RallyEdition.hpp"
+#include "Rally.hpp"
 
 struct Bet {
     const int amount;
@@ -22,5 +22,5 @@ public:
     // Create new bet
     static Bet makeBet(int amount, const Driver& driver) ;
     // Get the payoff
-    static Payoff getPayoff(const Bet& bet, const RallyEdition& edition);
+    static Payoff getPayoff(const Bet& bet, const Rally& rally);
 };

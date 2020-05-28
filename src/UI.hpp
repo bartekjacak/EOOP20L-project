@@ -84,7 +84,7 @@ namespace UI {
 
     class ResultsTable: public Table {
     public:
-        ResultsTable(const RallyEdition& edition, const Payoff& payoff);
+        ResultsTable(const Rally& rally, const Payoff& payoff);
     };
 
     class HomeScreen {
@@ -102,11 +102,11 @@ namespace UI {
 
     class ResultsScreen {
     public:
-        const RallyEdition& _edition;
+        const Rally& _rally;
         const Payoff& _payoff;
         ResultsTable _table;
 
-        ResultsScreen(const RallyEdition& edition_, const Payoff& payoff_);
+        ResultsScreen(const Rally& rally, const Payoff& payoff);
         void display() const;
     };
 };

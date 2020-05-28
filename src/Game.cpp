@@ -9,11 +9,10 @@ void Game::start() {
         auto homeScreen = UI::HomeScreen(_rally, _balance);
         auto bet = homeScreen.display();
 
-        auto currentEdition = _rally.performNextEdition(_simulator);
-        auto results = currentEdition.getOrderedResults();
-        auto payoff = Bookmaker::getPayoff(bet, currentEdition);
+        _rally.perform(_simulator);
+        auto payoff = Bookmaker::getPayoff(bet, _rally);
 
-        auto resultsScreen = UI::ResultsScreen(currentEdition, payoff);
+        auto resultsScreen = UI::ResultsScreen(_rally, payoff);
         resultsScreen.display();
     };
 }

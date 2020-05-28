@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "Simulator.hpp"
 
 using namespace std::chrono_literals;
@@ -7,17 +8,17 @@ Simulator::Simulator(Utils::Randomizer& randomizer):
     _bestPossibleTimeRange(durationRange(30min, 300min)),
     _timeOffsetRange(durationRange(0s, 3600s)) {};
 
-RallyEdition Simulator::simulateRallyEdition(int editionNumber, const std::vector<Driver>& drivers) const {
+std::vector<DriverTime> Simulator::simulateResults(const std::vector<Driver>& drivers) const {
     auto bestPossibleTime = randomBestFinishTime();
-    std::vector<DriverTime> times;
+    auto results = std::vector<DriverTime>();
 
-    times.reserve(drivers.size());
+    results.reserve(drivers.size());
     for (auto const &driver: drivers) {
         auto time = bestPossibleTime + randomTimeOffset();
-        times.emplace_back(driver, time);
+        results.emplace_back(driver, time);
     }
 
-    return RallyEdition(editionNumber, times);
+    return results;
 };
 
 duration Simulator::randomBestFinishTime() const {

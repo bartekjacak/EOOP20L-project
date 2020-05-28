@@ -28,8 +28,6 @@ add_executable(monte_carlo_rally
         src/main.cpp
         src/Rally.cpp
         src/Rally.hpp
-        src/RallyEdition.cpp
-        src/RallyEdition.hpp
         src/Simulator.cpp
         src/Simulator.hpp
         src/Bookmaker.cpp

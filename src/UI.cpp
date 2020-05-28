@@ -79,7 +79,7 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(2) {
     centerColumn(1);
 };
 
-UI::ResultsTable::ResultsTable(const RallyEdition& edition, const Payoff& payoff): Table(3) {
+UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3) {
     addFullSizeHeader(
         fort::text_style::bold,
         fort::text_align::center,
@@ -98,7 +98,9 @@ UI::ResultsTable::ResultsTable(const RallyEdition& edition, const Payoff& payoff
     centerColumn(2);
 
     int position = 1;
-    for (auto const &result: edition.getOrderedResults()) {
+    for (auto index: rally.getSortedResultsIndices()) {
+        const DriverTime& result = rally.latestResults[index];
+
         addRow(
             fort::text_style::default_style,
             fort::text_align::left,
@@ -142,8 +144,8 @@ Driver UI::HomeScreen::requestDriver() const {
     }
 };
 
-UI::ResultsScreen::ResultsScreen(const RallyEdition& edition, const Payoff& payoff):
-    _edition(edition), _payoff(payoff), _table{edition, payoff} {};
+UI::ResultsScreen::ResultsScreen(const Rally& rally, const Payoff& payoff):
+    _rally(rally), _payoff(payoff), _table{rally, payoff} {};
 
 void UI::ResultsScreen::display() const {
     Utils::clear();

@@ -2,7 +2,7 @@
 #include <vector>
 #include <random>
 #include <chrono>
-#include "RallyEdition.hpp"
+#include "DriverTime.hpp"
 #include "Driver.hpp"
 #include "Utils.hpp"
 
@@ -14,7 +14,7 @@ public:
     explicit Simulator(Utils::Randomizer& randomizer);
 
     // Simulates drivers' performance on a single edition
-    [[nodiscard]] RallyEdition simulateRallyEdition(int editionNumber, const std::vector<Driver>& drivers) const;
+    [[nodiscard]] std::vector<DriverTime> simulateResults(const std::vector<Driver>& drivers) const;
 
 private:
     Utils::Randomizer& _randomizer;
