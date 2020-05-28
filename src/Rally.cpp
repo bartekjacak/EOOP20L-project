@@ -26,7 +26,6 @@ std::vector<int> Rally::getSortedResultsIndices() const {
     return indices;
 };
 
-
 void Rally::perform(const Simulator& simulator) {
     latestEditionNumber++;
     latestResults = simulator.simulateResults(drivers);

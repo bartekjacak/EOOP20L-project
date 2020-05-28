@@ -33,6 +33,41 @@ namespace UI {
                 system("read");
             #endif
         }
+
+        static std::string toStringWithLeadingZeros(int value, int length) {
+            auto toString = std::to_string(value);
+            return std::string(length - toString.length(), '0') + toString;
+        }
+
+        static std::string formatTime(int time) {
+            int seconds = time;
+            int minutes = seconds / 60;
+            int hours = minutes / 60;
+
+            return (
+                "  " +
+                UI::Utils::toStringWithLeadingZeros(hours, 2) +
+                ":" +
+                UI::Utils::toStringWithLeadingZeros(minutes % 60, 2) +
+                ":" +
+                UI::Utils::toStringWithLeadingZeros(seconds % 60, 2)
+            );
+        }
+
+        static std::string formatTime(int time, int reference) {
+            int seconds = time - reference;
+            int minutes = seconds / 60;
+            int hours = minutes / 60;
+
+            return (
+                "+ " +
+                UI::Utils::toStringWithLeadingZeros(hours, 2) +
+                ":" +
+                UI::Utils::toStringWithLeadingZeros(minutes % 60, 2) +
+                ":" +
+                UI::Utils::toStringWithLeadingZeros(seconds % 60, 2)
+            );
+        }
     };
 
     class Table: public fort::char_table {

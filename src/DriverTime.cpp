@@ -1,28 +1,32 @@
 #include "DriverTime.hpp"
 
-DriverTime::DriverTime(const Driver& driver_, std::chrono::duration<int> time_):
-    driver(driver_), time(time_) {};
+DriverTime::DriverTime(const Driver& driver_, std::chrono::duration<int> time):
+    driver(driver_), _time(time) {};
+
+int DriverTime::getTime() const {
+    return _time.count();
+};
 
 bool operator==(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time == rhs.time;
+    return lhs._time == rhs._time;
 }
 
 bool operator!=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time != rhs.time;
+    return lhs._time != rhs._time;
 }
 
 bool operator>(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time > rhs.time;
+    return lhs._time > rhs._time;
 }
 
 bool operator>=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time >= rhs.time;
+    return lhs._time >= rhs._time;
 }
 
 bool operator<(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time < rhs.time;
+    return lhs._time < rhs._time;
 }
 
 bool operator<=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs.time <= rhs.time;
+    return lhs._time <= rhs._time;
 }

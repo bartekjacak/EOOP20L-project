@@ -5,9 +5,9 @@
 class DriverTime {
 public:
     const Driver& driver;
-    std::chrono::duration<int> time;
 
-    DriverTime(const Driver& driver_, std::chrono::duration<int> time_);
+    DriverTime(const Driver& driver_, std::chrono::duration<int> time);
+    [[nodiscard]] int getTime() const;
 
     // Overloading the comparison operators
     friend bool operator==(const DriverTime& lhs, const DriverTime& rhs);
@@ -16,4 +16,7 @@ public:
     friend bool operator>=(const DriverTime& lhs, const DriverTime& rhs);
     friend bool operator<(const DriverTime& lhs, const DriverTime& rhs);
     friend bool operator<=(const DriverTime& lhs, const DriverTime& rhs);
+
+private:
+    std::chrono::duration<int> _time;
 };

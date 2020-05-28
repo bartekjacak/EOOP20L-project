@@ -6,7 +6,7 @@ using namespace std::chrono_literals;
 Simulator::Simulator(Utils::Randomizer& randomizer):
     _randomizer(randomizer),
     _bestPossibleTimeRange(durationRange(30min, 300min)),
-    _timeOffsetRange(durationRange(0s, 3600s)) {};
+    _timeOffsetRange(durationRange(0s, 900s)) {};
 
 std::vector<DriverTime> Simulator::simulateResults(const std::vector<Driver>& drivers) const {
     auto bestPossibleTime = randomBestFinishTime();
