@@ -1,14 +1,14 @@
 #pragma once
 #include <iostream>
-#include "rally.hpp"
-#include "bookmaker.hpp"
+#include "Rally.hpp"
+#include "Bookmaker.hpp"
 #include "fort.hpp"
 
 namespace UI {
     class Utils {
     public:
         template<typename T>
-        static T request(const std::string &message) {
+        static T request(const std::string& message) {
             T value;
             while (std::cout << message && !(std::cin >> value)) {
                 std::cin.clear();
@@ -107,7 +107,6 @@ namespace UI {
         ResultsTable _table;
 
         ResultsScreen(const RallyEdition& edition_, const Payoff& payoff_);
-
         void display() const;
     };
 };

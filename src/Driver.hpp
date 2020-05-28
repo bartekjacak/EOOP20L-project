@@ -3,15 +3,11 @@
 
 class Driver {
 public:
-    Driver(std::string name);
-    ~Driver();
+    const std::string& name;
 
-    std::string getName() const { return _name; };
+    explicit Driver(const std::string& name_): name(name_) {};
 
     // Overloading the comparison operators
     friend bool operator==(const Driver& lhs, const Driver& rhs);
     friend bool operator!=(const Driver& lhs, const Driver& rhs);
-
-private:
-    const std::string _name;
 };

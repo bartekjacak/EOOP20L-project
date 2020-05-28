@@ -1,14 +1,13 @@
 #pragma once
 #include <vector>
-#include "driverTime.hpp"
+#include "DriverTime.hpp"
 
 class RallyEdition {
 public:
-    RallyEdition(unsigned int number, std::vector<DriverTime> results);
-    ~RallyEdition();
+    RallyEdition(int number, const std::vector<DriverTime>& results);
 
     // Returns drivers' times in ascending order
-    std::vector<DriverTime> getOrderedResults() const;
+    [[nodiscard]] std::vector<DriverTime> getOrderedResults() const;
 
 private:
     // Unique edition number

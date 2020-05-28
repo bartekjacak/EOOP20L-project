@@ -1,7 +1,7 @@
 #pragma once
 #include <optional>
-#include "driver.hpp"
-#include "rallyEdition.hpp"
+#include "Driver.hpp"
+#include "RallyEdition.hpp"
 
 struct Bet {
     const int amount;

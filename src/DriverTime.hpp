@@ -1,13 +1,13 @@
 #pragma once
-#include "driver.hpp"
+#include <chrono>
+#include "Driver.hpp"
 
 class DriverTime {
 public:
-    DriverTime(const Driver &driver, float time);
-    ~DriverTime();
+    const Driver& driver;
+    std::chrono::duration<int> time;
 
-    Driver getDriver() const { return _driver; }
-    float getTime() const { return _time; }
+    DriverTime(const Driver& driver_, std::chrono::duration<int> time_);
 
     // Overloading the comparison operators
     friend bool operator==(const DriverTime& lhs, const DriverTime& rhs);
@@ -16,10 +16,4 @@ public:
     friend bool operator>=(const DriverTime& lhs, const DriverTime& rhs);
     friend bool operator<(const DriverTime& lhs, const DriverTime& rhs);
     friend bool operator<=(const DriverTime& lhs, const DriverTime& rhs);
-
-private:
-    const Driver &_driver;
-
-    // Time in seconds
-    float _time;
 };

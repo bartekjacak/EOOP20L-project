@@ -1,4 +1,4 @@
-#include "bookmaker.hpp"
+#include "Bookmaker.hpp"
 
 Bet Bookmaker::makeBet(int amount, const Driver &driver) {
     return Bet(amount, driver);

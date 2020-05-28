@@ -1,4 +1,4 @@
-#include "ui.hpp"
+#include "UI.hpp"
 
 UI::Table::Table(size_t width_): fort::char_table(), width(width_) {
     set_border_style(FT_FRAME_STYLE);
@@ -50,7 +50,7 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(2) {
     addFullSizeHeader(
         fort::text_style::bold,
         fort::text_align::center,
-        rally.getName() + "Betting Simulator"
+        rally.name + "Betting Simulator"
     );
     addFullSizeHeader(
         fort::text_style::default_style,
@@ -65,12 +65,12 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(2) {
     );
 
     int index = 1;
-    for (auto const &driver: rally.getDrivers()) {
+    for (auto const &driver: rally.drivers) {
         addRow(
             fort::text_style::default_style,
             fort::text_align::left,
             std::to_string(index),
-            driver.getName()
+            driver.name
         );
         index++;
     }
@@ -103,8 +103,8 @@ UI::ResultsTable::ResultsTable(const RallyEdition& edition, const Payoff& payoff
             fort::text_style::default_style,
             fort::text_align::left,
             "#" + std::to_string(position),
-            result.getDriver().getName(),
-            std::to_string(result.getTime())
+            result.driver.name,
+            std::to_string(result.time.count())
         );
         position++;
     }

@@ -1,8 +1,7 @@
-#include "game.hpp"
+#include "Game.hpp"
 
-Game::Game(const Rally& rally, const Simulator& simulator):
-    _rally(rally), _simulator(simulator), _balance(INITIAL_BALANCE) {};
-Game::~Game() = default;
+Game::Game(const Rally& rally, const Simulator& simulator, int balance):
+    _rally(rally), _simulator(simulator), _balance(balance) {};
 
 void Game::start() {
     // Main loop
