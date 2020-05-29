@@ -9,11 +9,9 @@ set(CMAKE_CXX_FLAGS "\
     -Wpedantic \
     -pedantic-errors \
     -fsanitize=undefined \
+    -fsanitize=address \
+    -Werror \
 ")
-
-#    -fsanitize=address \
-
-#-Werror
 
 include_directories(.)
 include_directories(src)

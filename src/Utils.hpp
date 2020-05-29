@@ -13,7 +13,7 @@ namespace Utils {
     public:
         std::mt19937_64 generator;
 
-        explicit Randomizer(int seed = 0);
+        explicit Randomizer(unsigned long long int seed = 0);
         [[nodiscard]] int randomIn(Range<int> range);
     };
-};
+}

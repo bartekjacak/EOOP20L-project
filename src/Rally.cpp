@@ -1,16 +1,17 @@
+#include <algorithm>
 #include "Rally.hpp"
 
 Rally::Rally(const std::string& name_, const std::vector<Driver>& drivers_):
-    name(name_), drivers(drivers_), latestResults(), latestEditionNumber(0) {};
+    name(name_), drivers(drivers_), latestResults(), latestEditionNumber(0) {}
 
-Driver Rally::getDriver(int index) const {
+const Driver& Rally::getDriver(unsigned long index) const {
 //    if (index < 1 || index > _drivers.size()) {
 //        return std::nullopt;
 //        throw
 //    }
 
     return drivers.at(index - 1);
-};
+}
 
 std::vector<int> Rally::getSortedResultsIndices() const {
     int resultsCount = latestResults.size();
@@ -24,7 +25,7 @@ std::vector<int> Rally::getSortedResultsIndices() const {
     });
 
     return indices;
-};
+}
 
 std::vector<int> Rally::getDriversIndicesSortedByWins() const {
     int driversCount = drivers.size();
@@ -38,7 +39,7 @@ std::vector<int> Rally::getDriversIndicesSortedByWins() const {
     });
 
     return indices;
-};
+}
 
 void Rally::perform(Simulator simulator) {
     latestEditionNumber++;

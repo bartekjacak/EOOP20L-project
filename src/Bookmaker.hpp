@@ -22,10 +22,10 @@ public:
     Bookmaker() = default;
 
     // Create new bet
-    Bet makeBet(int amount, const Driver& driver) const;
+    [[nodiscard]] Bet makeBet(int amount, const Driver& driver) const;
     // Get the payoff
-    Payoff getPayoff(const Bet& bet, const Rally& rally) const;
+    [[nodiscard]] Payoff getPayoff(const Bet& bet, const Rally& rally) const;
 
 private:
-    double getAllPossibilities(const std::vector<Driver>& drivers) const;
+    [[nodiscard]] double getAllPossibilities(const std::vector<Driver>& drivers) const;
 };

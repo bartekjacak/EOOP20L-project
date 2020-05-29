@@ -39,7 +39,7 @@ void UI::Table::addFullSizeHeader(
 }
 
 void UI::Table::centerColumn(size_t id) {
-    column(0).set_cell_text_align(fort::text_align::center);
+    column(id).set_cell_text_align(fort::text_align::center);
 }
 
 void UI::Table::print() const {
@@ -126,17 +126,17 @@ void UI::ResultsTable::addResult(const DriverTime& result, int pos) {
         driverName,
         time
     );
-};
+}
 
 UI::HomeScreen::HomeScreen(const Rally& rally, int balance, const Bookmaker& bookmaker):
-    _balance(balance), _rally(rally), _bookmaker(bookmaker),  _table{rally, balance} {}
+    _rally(rally), _bookmaker(bookmaker),  _table{rally, balance} {}
 
 Bet UI::HomeScreen::display() const {
     Utils::clear();
 
     _table.print();
     std::cout << "MAKE A BET" << std::endl;
-    auto driver = requestDriver();
+    const auto& driver = requestDriver();
     auto betAmount = Utils::request<int>("BET AMOUNT: ");
 //
 //    auto driver = Driver("XD");
@@ -145,7 +145,7 @@ Bet UI::HomeScreen::display() const {
     return _bookmaker.makeBet(betAmount, driver);
 }
 
-Driver UI::HomeScreen::requestDriver() const {
+const Driver& UI::HomeScreen::requestDriver() const {
     while (true) {
         auto driverNumber = Utils::request<int>("DRIVER NUMBER: ");
 
@@ -158,7 +158,7 @@ Driver UI::HomeScreen::requestDriver() const {
 }
 
 UI::ResultsScreen::ResultsScreen(const Rally& rally, const Payoff& payoff):
-    _rally(rally), _payoff(payoff), _table{rally, payoff} {};
+    _rally(rally), _payoff(payoff), _table{rally, payoff} {}
 
 void UI::ResultsScreen::display() const {
     Utils::clear();

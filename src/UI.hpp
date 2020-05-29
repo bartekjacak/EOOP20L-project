@@ -131,12 +131,11 @@ namespace UI {
         Bet display() const;
 
     private:
-        int _balance;
         const Rally& _rally;
         const Bookmaker& _bookmaker;
         HomeTable _table;
 
-        Driver requestDriver() const;
+        const Driver& requestDriver() const;
     };
 
     class ResultsScreen {
@@ -148,4 +147,4 @@ namespace UI {
         ResultsScreen(const Rally& rally, const Payoff& payoff);
         void display() const;
     };
-};
+}
