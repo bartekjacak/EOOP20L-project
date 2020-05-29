@@ -19,8 +19,13 @@ struct Payoff {
 
 class Bookmaker {
 public:
+    Bookmaker() = default;
+
     // Create new bet
-    static Bet makeBet(int amount, const Driver& driver) ;
+    Bet makeBet(int amount, const Driver& driver) const;
     // Get the payoff
-    static Payoff getPayoff(const Bet& bet, const Rally& rally);
+    Payoff getPayoff(const Bet& bet, const Rally& rally) const;
+
+private:
+    double getAllPossibilities(const std::vector<Driver>& drivers) const;
 };

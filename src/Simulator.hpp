@@ -11,16 +11,16 @@ typedef Utils::Range<duration> durationRange;
 
 class Simulator {
 public:
-    explicit Simulator(Utils::Randomizer& randomizer);
+    explicit Simulator(Utils::Randomizer randomizer);
 
     // Simulates drivers' performance on a single edition
-    [[nodiscard]] std::vector<DriverTime> simulateResults(const std::vector<Driver>& drivers) const;
+    [[nodiscard]] std::vector<DriverTime> simulateResults(const std::vector<Driver>& drivers);
 
 private:
-    Utils::Randomizer& _randomizer;
+    Utils::Randomizer _randomizer;
     durationRange _bestPossibleTimeRange;
     durationRange _timeOffsetRange;
 
-    [[nodiscard]] duration randomBestFinishTime() const;
-    [[nodiscard]] duration randomTimeOffset() const;
+    [[nodiscard]] duration randomBestFinishTime();
+    [[nodiscard]] duration randomTimeOffset();
 };

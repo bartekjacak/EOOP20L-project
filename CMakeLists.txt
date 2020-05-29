@@ -33,7 +33,7 @@ add_executable(monte_carlo_rally
         src/Bookmaker.cpp
         src/DriverTime.cpp
         src/UI.cpp
-        src/UI.hpp src/Utils.cpp src/Utils.hpp)
+        src/UI.hpp src/Utils.hpp src/Utils.cpp src/Driver.cpp)
 
 
 # Library for terminal tables

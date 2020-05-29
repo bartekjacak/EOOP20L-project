@@ -118,18 +118,22 @@ namespace UI {
     };
 
     class ResultsTable: public Table {
+    const Rally& _rally;
+
     public:
         ResultsTable(const Rally& rally, const Payoff& payoff);
+        void addResult(const DriverTime& result, int pos);
     };
 
     class HomeScreen {
     public:
-        HomeScreen(const Rally& rally_, int balance_);
+        HomeScreen(const Rally& rally, int balance, const Bookmaker& bookmaker);
         Bet display() const;
 
     private:
         int _balance;
         const Rally& _rally;
+        const Bookmaker& _bookmaker;
         HomeTable _table;
 
         Driver requestDriver() const;

@@ -46,7 +46,7 @@ void UI::Table::print() const {
     std::cout << to_string() << std::endl;
 }
 
-UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(2) {
+UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
     addFullSizeHeader(
         fort::text_style::bold,
         fort::text_align::center,
@@ -61,25 +61,27 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(2) {
         fort::text_style::default_style,
         fort::text_align::center,
         "Number",
-        "Driver"
+        "Driver",
+        "Wins"
     );
 
-    int index = 1;
-    for (auto const &driver: rally.drivers) {
+    for (auto index: rally.getDriversIndicesSortedByWins()) {
+        auto driver = rally.drivers[index];
         addRow(
             fort::text_style::default_style,
             fort::text_align::left,
-            std::to_string(index),
-            driver.name
+            std::to_string(index + 1),
+            driver.name,
+            std::to_string(driver.winsCount)
         );
-        index++;
     }
 
     centerColumn(0);
     centerColumn(1);
+    centerColumn(2);
 }
 
-UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3) {
+UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3), _rally(rally) {
     addFullSizeHeader(
         fort::text_style::bold,
         fort::text_align::center,
@@ -97,25 +99,9 @@ UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(
     centerColumn(1);
     centerColumn(2);
 
-    auto sortedResultsIndices = rally.getSortedResultsIndices();
-    auto bestResultIndex = sortedResultsIndices[0];
-
     int iterator = 1;
-    for (auto index: sortedResultsIndices) {
-        const DriverTime& result = rally.latestResults[index];
-
-        auto position = "#" + std::to_string(iterator);
-        auto driverName = result.driver.name;
-        auto time = (iterator == 1) ? UI::Utils::formatTime(result.getTime()) :
-            UI::Utils::formatTime(result.getTime(), rally.latestResults[bestResultIndex].getTime());
-
-        addRow(
-            fort::text_style::default_style,
-            fort::text_align::left,
-            position,
-            driverName,
-            time
-        );
+    for (auto index: rally.getSortedResultsIndices()) {
+        addResult(rally.latestResults[index], iterator);
         iterator++;
     }
 
@@ -126,8 +112,24 @@ UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(
     );
 }
 
-UI::HomeScreen::HomeScreen(const Rally& rally, int balance):
-    _balance(balance), _rally(rally), _table{rally, balance} {}
+void UI::ResultsTable::addResult(const DriverTime& result, int pos) {
+    auto bestResultIndex = _rally.getSortedResultsIndices()[0];
+    auto position = "#" + std::to_string(pos);
+    auto driverName = result.driver.name;
+    auto time = (pos == 1) ? UI::Utils::formatTime(result.getTime()) :
+        UI::Utils::formatTime(result.getTime(), _rally.latestResults[bestResultIndex].getTime());
+
+    addRow(
+        fort::text_style::default_style,
+        fort::text_align::left,
+        position,
+        driverName,
+        time
+    );
+};
+
+UI::HomeScreen::HomeScreen(const Rally& rally, int balance, const Bookmaker& bookmaker):
+    _balance(balance), _rally(rally), _bookmaker(bookmaker),  _table{rally, balance} {}
 
 Bet UI::HomeScreen::display() const {
     Utils::clear();
@@ -136,8 +138,11 @@ Bet UI::HomeScreen::display() const {
     std::cout << "MAKE A BET" << std::endl;
     auto driver = requestDriver();
     auto betAmount = Utils::request<int>("BET AMOUNT: ");
+//
+//    auto driver = Driver("XD");
+//    auto betAmount = 12;
 
-    return Bookmaker::makeBet(betAmount, driver);
+    return _bookmaker.makeBet(betAmount, driver);
 }
 
 Driver UI::HomeScreen::requestDriver() const {

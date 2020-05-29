@@ -33,8 +33,9 @@ int main() {
 
     auto randomizer = Utils::Randomizer();
     auto simulator = Simulator(randomizer);
+    auto bookmaker = Bookmaker();
     auto rally = Rally(RALLY_NAME, DRIVERS);
-    auto game = Game(rally, simulator, INITIAL_BALANCE);
+    auto game = Game(rally, simulator, bookmaker, INITIAL_BALANCE);
     game.start();
 
     return 0;
