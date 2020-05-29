@@ -1,3 +1,4 @@
+#include <cmath>
 #include "UI.hpp"
 
 UI::Table::Table(size_t width_): fort::char_table(), width(width_) {
@@ -6,36 +7,35 @@ UI::Table::Table(size_t width_): fort::char_table(), width(width_) {
 
 template<typename T, typename ...Ts>
 void UI::Table::addHeader(
-    fort::text_style style,
-    fort::text_align align,
+    const TableStyles& styles,
     const T &str,
     const Ts &...strings
 ) {
     operator<<(fort::header);
-    addRow(style, align, str, strings...);
+    addRow(styles, str, strings...);
 }
 
 template<typename T, typename ...Ts>
 void UI::Table::addRow(
-    fort::text_style style,
-    fort::text_align align,
+    const TableStyles& styles,
     const T &str,
     const Ts &...strings
 ) {
-    currentRow().set_cell_text_style(style);
-    currentRow().set_cell_text_align(align);
+    currentRow().set_cell_bg_color(styles.backgroundColor);
+    currentRow().set_cell_content_fg_color(styles.textColor);
+    currentRow().set_cell_text_style(styles.appearance);
+    currentRow().set_cell_text_align(styles.alignment);
     write_ln(str, strings...);
 }
 
 template<typename T, typename ...Ts>
 void UI::Table::addFullSizeHeader(
-    fort::text_style style,
-    fort::text_align align,
+    const TableStyles& styles,
     const T &str,
     const Ts &...strings
 ) {
     currentCell().set_cell_span(width);
-    addHeader(style, align, str, strings...);
+    addHeader(styles, str, strings...);
 }
 
 void UI::Table::centerColumn(size_t id) {
@@ -48,18 +48,15 @@ void UI::Table::print() const {
 
 UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
     addFullSizeHeader(
-        fort::text_style::bold,
-        fort::text_align::center,
+        TableStyles(fort::text_style::bold, fort::text_align::center),
         rally.name + "Betting Simulator"
     );
     addFullSizeHeader(
-        fort::text_style::default_style,
-        fort::text_align::left,
+        TableStyles(fort::text_align::left),
         "Balance: $" + std::to_string(balance)
     );
     addHeader(
-        fort::text_style::default_style,
-        fort::text_align::center,
+        TableStyles(fort::text_align::center),
         "Number",
         "Driver",
         "Wins"
@@ -68,8 +65,7 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
     for (auto index: rally.getDriversIndicesSortedByWins()) {
         auto driver = rally.drivers[index];
         addRow(
-            fort::text_style::default_style,
-            fort::text_align::left,
+            TableStyles(fort::text_align::left),
             std::to_string(index + 1),
             driver.name,
             std::to_string(driver.winsCount)
@@ -83,13 +79,11 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
 
 UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3), _rally(rally) {
     addFullSizeHeader(
-        fort::text_style::bold,
-        fort::text_align::center,
+        TableStyles(fort::text_style::bold, fort::text_align::center),
         "Latest Edition Results"
     );
     addHeader(
-        fort::text_style::default_style,
-        fort::text_align::center,
+        TableStyles(fort::text_align::center),
         "Rank",
         "Driver",
         "Time"
@@ -101,32 +95,45 @@ UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(
 
     int iterator = 1;
     for (auto index: rally.getSortedResultsIndices()) {
-        addResult(rally.latestResults[index], iterator);
+        auto wasBet = rally.latestResults[index].driver == payoff.bet.driver;
+        addResult(rally.latestResults[index], iterator, wasBet);
         iterator++;
     }
 
+    auto isPayoffPositive = payoff.value >= 0;
+    auto payoffColor = isPayoffPositive ? fort::color::green : fort::color::red;
+    auto sign = isPayoffPositive ? std::string("+") : std::string("-");
     addFullSizeHeader(
-        fort::text_style::default_style,
-        fort::text_align::center,
-        "PAYOFF: " + std::to_string(payoff.value)
+        TableStyles(fort::text_style::default_style, fort::text_align::center, payoffColor),
+        "PAYOFF: " + sign + "$" + std::to_string(abs(payoff.value))
     );
 }
 
-void UI::ResultsTable::addResult(const DriverTime& result, int pos) {
+void UI::ResultsTable::addResult(const DriverTime& result, int pos, bool wasBet) {
     auto bestResultIndex = _rally.getSortedResultsIndices()[0];
     auto position = "#" + std::to_string(pos);
     auto driverName = result.driver.name;
     auto time = (pos == 1) ? UI::Utils::formatTime(result.getTime()) :
         UI::Utils::formatTime(result.getTime(), _rally.latestResults[bestResultIndex].getTime());
 
+    auto color = wasBet ? fort::color::default_color : fort::color::dark_gray;
+
     addRow(
-        fort::text_style::default_style,
-        fort::text_align::left,
+        TableStyles(fort::text_style::default_style, fort::text_align::left, color),
         position,
         driverName,
         time
     );
 }
+
+UI::TableStyles::TableStyles(Appearance appearance_, Alignment alignment_, Color color_, Color backgroundColor_):
+    appearance(appearance_), alignment(alignment_), textColor(color_), backgroundColor(backgroundColor_) {}
+
+UI::TableStyles::TableStyles(Alignment alignment_):
+    appearance(Appearance::default_style), alignment(alignment_), textColor(Color::default_color), backgroundColor(Color::black) {}
+
+UI::TableStyles::TableStyles(Color color_, Color backgroundColor_):
+    appearance(Appearance::default_style), alignment(Alignment::left), textColor(color_), backgroundColor(backgroundColor_) {}
 
 UI::HomeScreen::HomeScreen(const Rally& rally, int balance, const Bookmaker& bookmaker):
     _rally(rally), _bookmaker(bookmaker),  _table{rally, balance} {}
@@ -138,9 +145,6 @@ Bet UI::HomeScreen::display() const {
     std::cout << "MAKE A BET" << std::endl;
     const auto& driver = requestDriver();
     auto betAmount = Utils::request<int>("BET AMOUNT: ");
-//
-//    auto driver = Driver("XD");
-//    auto betAmount = 12;
 
     return _bookmaker.makeBet(betAmount, driver);
 }
@@ -149,11 +153,11 @@ const Driver& UI::HomeScreen::requestDriver() const {
     while (true) {
         auto driverNumber = Utils::request<int>("DRIVER NUMBER: ");
 
-//        try {
+        try {
             return _rally.getDriver(driverNumber);
-//        } catch (const std::bad_optional_access &e) {
-//            continue;
-//        }
+        } catch (const Rally::InvalidDriverIdError& error) {
+            continue;
+        }
     }
 }
 

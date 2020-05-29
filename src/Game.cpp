@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game(Rally rally, Simulator simulator, const Bookmaker& bookmaker, int balance):
+Game::Game(Rally& rally, Simulator simulator, const Bookmaker& bookmaker, int balance):
     _rally(rally), _simulator(simulator), _bookmaker(bookmaker), _balance(balance) {}
 
 void Game::start() {

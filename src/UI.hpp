@@ -70,30 +70,49 @@ namespace UI {
         }
     };
 
+    class TableStyles {
+    public:
+        typedef fort::text_style Appearance;
+        Appearance appearance;
+
+        typedef fort::text_align Alignment;
+        Alignment alignment;
+
+        typedef fort::color Color;
+        Color textColor;
+        Color backgroundColor;
+
+        explicit TableStyles(Alignment alignment_);
+        explicit TableStyles(Color textColor, Color backgroundColor_ = Color::black);
+        explicit TableStyles(
+            Appearance appearance_ = Appearance::default_style,
+            Alignment _alignment_ = Alignment::left,
+            Color textColor = Color::default_color,
+            Color backgroundColor_ = Color::black
+        );
+    };
+
     class Table: public fort::char_table {
     public:
         explicit Table(size_t width_);
 
         template<typename T, typename ...Ts>
         void addHeader(
-            fort::text_style style,
-            fort::text_align align,
+            const TableStyles& styles,
             const T &str,
             const Ts &...strings
         );
 
         template<typename T, typename ...Ts>
         void addRow(
-            fort::text_style style,
-            fort::text_align align,
+            const TableStyles& styles,
             const T &str,
             const Ts &...strings
         );
 
         template<typename T, typename ...Ts>
         void addFullSizeHeader(
-            fort::text_style style,
-            fort::text_align align,
+            const TableStyles& styles,
             const T &str,
             const Ts &...strings
         );
@@ -122,7 +141,7 @@ namespace UI {
 
     public:
         ResultsTable(const Rally& rally, const Payoff& payoff);
-        void addResult(const DriverTime& result, int pos);
+        void addResult(const DriverTime& result, int pos, bool wasBet);
     };
 
     class HomeScreen {

@@ -5,10 +5,9 @@ Rally::Rally(const std::string& name_, const std::vector<Driver>& drivers_):
     name(name_), drivers(drivers_), latestResults(), latestEditionNumber(0) {}
 
 const Driver& Rally::getDriver(unsigned long index) const {
-//    if (index < 1 || index > _drivers.size()) {
-//        return std::nullopt;
-//        throw
-//    }
+    if (index < 1 || index > drivers.size()) {
+        throw Rally::InvalidDriverIdError();
+    }
 
     return drivers.at(index - 1);
 }

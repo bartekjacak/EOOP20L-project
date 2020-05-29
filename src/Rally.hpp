@@ -11,6 +11,8 @@ public:
     std::vector<DriverTime> latestResults;
     int latestEditionNumber;
 
+    class InvalidDriverIdError: public std::exception {};
+
     Rally(const std::string& name_, const std::vector<Driver>& drivers_);
     [[nodiscard]] std::vector<int> getSortedResultsIndices() const;
     [[nodiscard]] std::vector<int> getDriversIndicesSortedByWins() const;
