@@ -17,12 +17,4 @@ void Game::start() {
         auto resultsScreen = UI::ResultsScreen(_rally, payoff);
         resultsScreen.display();
     }
-
-//   for (auto i = 0; i < 10000; i++) {
-//        _rally.perform(_simulator);
-//    };
-//
-//     auto homeScreen1 = UI::HomeScreen(_rally, _balance, _bookmaker);
-//     homeScreen1.display();
-
 }

@@ -14,8 +14,9 @@ public:
     class InvalidDriverIdError: public std::exception {};
 
     Rally(const std::string& name_, const std::vector<Driver>& drivers_);
+
     [[nodiscard]] std::vector<int> getSortedResultsIndices() const;
-    [[nodiscard]] std::vector<int> getDriversIndicesSortedByWins() const;
+
     [[nodiscard]] const Driver& getDriver(unsigned long index) const;
 
     // Performs a simulation using simulator and returns finished edition

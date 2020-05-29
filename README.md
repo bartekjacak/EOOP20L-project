@@ -8,3 +8,8 @@ To build and run the project use CLion or run the following command:
 ```sh
 $ ./build.sh && ./run.sh
 ```
+
+Run tests with this command:
+```sh
+$ ./test.sh
+```

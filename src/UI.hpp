@@ -155,6 +155,7 @@ namespace UI {
         HomeTable _table;
 
         const Driver& requestDriver() const;
+        int requestBetAmount() const;
     };
 
     class ResultsScreen {

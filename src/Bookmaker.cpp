@@ -6,6 +6,7 @@ Bet Bookmaker::makeBet(int amount, const Driver& driver) const {
 
 Payoff Bookmaker::getPayoff(const Bet& bet, const Rally& rally) const {
     auto payoff = 0;
+    auto xd = rally.getSortedResultsIndices();
     auto lastWinnerIndex = rally.getSortedResultsIndices()[0];
     auto didBetterWin = bet.driver == rally.latestResults[lastWinnerIndex].driver;
 

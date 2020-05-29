@@ -62,7 +62,17 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
         "Wins"
     );
 
-    for (auto index: rally.getDriversIndicesSortedByWins()) {
+    // Sort by wins
+    int driversCount = rally.drivers.size();
+    auto indices = std::vector<int>();
+    indices.reserve(driversCount);
+    for (int i = 0; i < driversCount; i++) indices.push_back(i);
+
+    std::sort(indices.begin(), indices.end(), [rally](int lhs, int rhs) {
+        return rally.drivers[lhs].winsCount > rally.drivers[rhs].winsCount;
+    });
+
+    for (auto index: indices) {
         auto driver = rally.drivers[index];
         addRow(
             TableStyles(fort::text_align::left),
@@ -144,7 +154,7 @@ Bet UI::HomeScreen::display() const {
     _table.print();
     std::cout << "MAKE A BET" << std::endl;
     const auto& driver = requestDriver();
-    auto betAmount = Utils::request<int>("BET AMOUNT: ");
+    auto betAmount = requestBetAmount();
 
     return _bookmaker.makeBet(betAmount, driver);
 }
@@ -156,6 +166,18 @@ const Driver& UI::HomeScreen::requestDriver() const {
         try {
             return _rally.getDriver(driverNumber);
         } catch (const Rally::InvalidDriverIdError& error) {
+            continue;
+        }
+    }
+}
+
+int UI::HomeScreen::requestBetAmount() const {
+    while (true) {
+        auto betAmount = Utils::request<int>("BET AMOUNT: ");
+
+        if (betAmount > 0) {
+            return betAmount;
+        } else {
             continue;
         }
     }

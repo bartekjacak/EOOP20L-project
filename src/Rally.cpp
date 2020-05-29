@@ -26,20 +26,6 @@ std::vector<int> Rally::getSortedResultsIndices() const {
     return indices;
 }
 
-std::vector<int> Rally::getDriversIndicesSortedByWins() const {
-    int driversCount = drivers.size();
-    auto indices = std::vector<int>();
-    indices.reserve(driversCount);
-
-    for (int i = 0; i < driversCount; i++) indices.push_back(i);
-
-    std::sort(indices.begin(), indices.end(), [this](int lhs, int rhs) {
-        return drivers[lhs].winsCount > drivers[rhs].winsCount;
-    });
-
-    return indices;
-}
-
 void Rally::perform(Simulator simulator) {
     latestEditionNumber++;
     latestResults = simulator.simulateResults(drivers);

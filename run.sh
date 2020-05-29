@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./cmake-build-debug/monte_carlo_rally
+./cmake-build-debug/src/monte_carlo_bets

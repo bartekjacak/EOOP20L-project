@@ -27,5 +27,6 @@ public:
     [[nodiscard]] Payoff getPayoff(const Bet& bet, const Rally& rally) const;
 
 private:
+    // Used to calculate the payoff, all possibilities based on drivers wins
     [[nodiscard]] double getAllPossibilities(const std::vector<Driver>& drivers) const;
 };
