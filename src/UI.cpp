@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 #include "UI.hpp"
 
 UI::Table::Table(size_t width_): fort::char_table(), width(width_) {

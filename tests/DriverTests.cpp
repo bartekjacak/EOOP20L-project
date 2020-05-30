@@ -1,3 +1,4 @@
+#include <chrono>
 #include "gtest/gtest.h"
 #include "../src/Driver.hpp"
 
@@ -6,9 +7,13 @@ using namespace std::chrono_literals;
 class DriverTests : public ::testing::Test {
 protected:
     DriverTests():
-        driverA("Mike Scott"),
-        driverB("Robert Kubica") {}
+        nameA("Mike Scott"),
+        nameB("Robert Kubica"),
+        driverA(nameA),
+        driverB(nameB) {}
 
+    std::string nameA;
+    std::string nameB;
     Driver driverA;
     Driver driverB;
 };

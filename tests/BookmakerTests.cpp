@@ -12,13 +12,17 @@ protected:
     BookmakerTests():
         bookmaker(),
         betAmount(100),
-        driverA("Mike Scott"),
-        driverB("Robert Kubica"),
+        nameA("Mike Scott"),
+        nameB("Robert Kubica"),
+        driverA(nameA),
+        driverB(nameB),
         resultA(driverA, 100s),
         resultB(driverB, 200s) {}
 
     Bookmaker bookmaker;
     int betAmount;
+    std::string nameA;
+    std::string nameB;
     Driver driverA;
     Driver driverB;
     DriverTime resultA;
@@ -28,8 +32,8 @@ protected:
 TEST_F (BookmakerTests, makeBet) {
     auto bet = bookmaker.makeBet(betAmount, driverA);
 
-    ASSERT_EQ(bet.amount, betAmount);
-    ASSERT_EQ(bet.driver.name, driverA.name);
+    EXPECT_TRUE(bet.amount == betAmount);
+    EXPECT_TRUE(bet.driver.name == driverA.name);
 }
 
 TEST_F (BookmakerTests, getPayoff_WhenWinning) {
@@ -53,5 +57,5 @@ TEST_F (BookmakerTests, getPayoff_WhenLosing) {
     auto bet = bookmaker.makeBet(betAmount, driverB);
     auto payoff = bookmaker.getPayoff(bet, rally);
 
-    EXPECT_EQ(payoff.value, -betAmount);
+    EXPECT_TRUE(payoff.value == -betAmount);
 }
