@@ -20,5 +20,4 @@ protected:
 
 TEST_F (DriverTests, operators) {
     EXPECT_TRUE(driverB == driverB);
-    EXPECT_TRUE(driverA != driverB);
 }

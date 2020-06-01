@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 
 project(monte_carlo_bets)
 
+SET(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 set(CMAKE_CXX_FLAGS "\

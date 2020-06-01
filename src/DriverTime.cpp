@@ -7,26 +7,6 @@ int DriverTime::getTime() const {
     return _time.count();
 }
 
-bool operator==(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs._time == rhs._time;
-}
-
-bool operator!=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs._time != rhs._time;
-}
-
-bool operator>(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs._time > rhs._time;
-}
-
-bool operator>=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs._time >= rhs._time;
-}
-
 bool operator<(const DriverTime& lhs, const DriverTime& rhs) {
     return lhs._time < rhs._time;
-}
-
-bool operator<=(const DriverTime& lhs, const DriverTime& rhs) {
-    return lhs._time <= rhs._time;
 }

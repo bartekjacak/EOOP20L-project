@@ -19,12 +19,7 @@ protected:
 };
 
 TEST_F (DriverTimeTests, operators) {
-    EXPECT_TRUE(resultA == resultA);
-    EXPECT_TRUE(resultA != resultB);
     EXPECT_TRUE(resultA < resultB);
-    EXPECT_TRUE(resultA <= resultB);
-    EXPECT_TRUE(resultB > resultA);
-    EXPECT_TRUE(resultB >= resultA);
 }
 
 TEST_F (DriverTimeTests, getTime) {

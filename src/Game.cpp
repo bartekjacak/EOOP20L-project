@@ -1,7 +1,7 @@
 #include "Game.hpp"
 
-Game::Game(Rally& rally, Simulator simulator, const Bookmaker& bookmaker, int balance):
-    _rally(rally), _simulator(simulator), _bookmaker(bookmaker), _balance(balance) {}
+Game::Game(Utils::Randomizer randomizer, Rally& rally, const Bookmaker& bookmaker, int balance):
+    _rally(rally), _bookmaker(bookmaker), _balance(balance), _simulator{randomizer} {}
 
 void Game::start() {
     // Main loop

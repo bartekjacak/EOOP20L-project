@@ -11,9 +11,10 @@ namespace Utils {
 
     class Randomizer {
     public:
-        std::mt19937_64 generator;
-
-        explicit Randomizer(unsigned long long int seed = 0);
+        explicit Randomizer(unsigned long long int seed_ = 0);
         [[nodiscard]] int randomIn(Range<int> range);
+    private:
+        unsigned long long int seed;
+        std::mt19937_64 generator;
     };
 }

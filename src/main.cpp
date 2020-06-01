@@ -1,4 +1,4 @@
-#include <locale.h>
+#include <clocale>
 #include <vector>
 #include <string>
 #include "Rally.hpp"
@@ -41,10 +41,9 @@ int main() {
     }
 
     auto randomizer = Utils::Randomizer();
-    auto simulator = Simulator(randomizer);
     auto bookmaker = Bookmaker();
     auto rally = Rally(RALLY_NAME, drivers);
-    auto game = Game(rally, simulator, bookmaker, INITIAL_BALANCE);
+    auto game = Game(randomizer, rally, bookmaker, INITIAL_BALANCE);
     game.start();
 
     return 0;

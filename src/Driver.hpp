@@ -3,13 +3,12 @@
 
 class Driver {
 public:
-    const std::string& name;
+    std::string name;
     mutable int winsCount;
 
-    explicit Driver(const std::string& name_, int winsCount_ = 0);
+    explicit Driver(std::string name_, int winsCount_ = 0);
 
-    // Overloading the comparison operators
+    // Overloading the comparison operator
     friend bool operator==(const Driver& lhs, const Driver& rhs);
-    friend bool operator!=(const Driver& lhs, const Driver& rhs);
 };
 

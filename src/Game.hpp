@@ -7,13 +7,13 @@
 
 class Game {
 public:
-    Game(Rally& rally, Simulator simulator, const Bookmaker& bookmaker, int balance);
+    Game(Utils::Randomizer randomizer, Rally& _rally, const Bookmaker& bookmaker, int balance);
     void start();
 
 private:
     Rally& _rally;
-    Simulator _simulator;
     const Bookmaker& _bookmaker;
     // Account balance of the player
     int _balance;
+    Simulator _simulator;
 };
