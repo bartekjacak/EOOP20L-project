@@ -50,7 +50,7 @@ void UI::Table::print() const {
 UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
     addFullSizeHeader(
         TableStyles(fort::text_style::bold, fort::text_align::center),
-        rally.name + "Betting Simulator"
+        rally.name + " Betting Simulator"
     );
     addFullSizeHeader(
         TableStyles(fort::text_align::left),
@@ -88,7 +88,7 @@ UI::HomeTable::HomeTable(const Rally& rally, int balance): Table(3) {
     centerColumn(2);
 }
 
-UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3), _rally(rally) {
+UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(3) {
     addFullSizeHeader(
         TableStyles(fort::text_style::bold, fort::text_align::center),
         "Latest Edition Results"
@@ -107,7 +107,7 @@ UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(
     int iterator = 1;
     for (auto index: rally.getSortedResultsIndices()) {
         auto wasBet = rally.latestResults[index].driver == payoff.bet.driver;
-        addResult(rally.latestResults[index], iterator, wasBet);
+        addResult(rally.latestResults[index], rally, iterator, wasBet);
         iterator++;
     }
 
@@ -120,12 +120,12 @@ UI::ResultsTable::ResultsTable(const Rally& rally, const Payoff& payoff): Table(
     );
 }
 
-void UI::ResultsTable::addResult(const DriverTime& result, int pos, bool wasBet) {
-    auto bestResultIndex = _rally.getSortedResultsIndices()[0];
+void UI::ResultsTable::addResult(const DriverTime& result, const Rally& rally, int pos, bool wasBet) {
+    auto bestResultIndex = rally.getSortedResultsIndices()[0];
     auto position = "#" + std::to_string(pos);
     auto driverName = result.driver.name;
     auto time = (pos == 1) ? UI::Utils::formatTime(result.getTime()) :
-        UI::Utils::formatTime(result.getTime(), _rally.latestResults[bestResultIndex].getTime());
+        UI::Utils::formatTime(result.getTime(), rally.latestResults[bestResultIndex].getTime());
 
     auto color = wasBet ? fort::color::default_color : fort::color::dark_gray;
 
@@ -184,8 +184,7 @@ int UI::HomeScreen::requestBetAmount() const {
     }
 }
 
-UI::ResultsScreen::ResultsScreen(const Rally& rally, const Payoff& payoff):
-    _rally(rally), _payoff(payoff), _table{rally, payoff} {}
+UI::ResultsScreen::ResultsScreen(const Rally& rally, const Payoff& payoff): _table{rally, payoff} {}
 
 void UI::ResultsScreen::display() const {
     Utils::clear();

@@ -7,6 +7,7 @@
 namespace UI {
     class Utils {
     public:
+        // Request input from user with a message
         template<typename T>
         static T request(const std::string& message) {
             T value;
@@ -18,6 +19,7 @@ namespace UI {
             return value;
         }
 
+        // Clear the screen
         static void clear() {
             #ifdef WINDOWS
                 std::system("cls");
@@ -26,6 +28,7 @@ namespace UI {
             #endif
         }
 
+        // Pause the screen until some key is pressed
         static void pause() {
             #ifdef WINDOWS
                 system("pause");
@@ -34,11 +37,13 @@ namespace UI {
             #endif
         }
 
+        // Format integer as a string with appropriate number of leading zeros
         static std::string toStringWithLeadingZeros(int value, int length) {
             auto toString = std::to_string(value);
             return std::string(length - toString.length(), '0') + toString;
         }
 
+        // Format time: HH:MM:SS
         static std::string formatTime(int time) {
             int seconds = time;
             int minutes = seconds / 60;
@@ -54,6 +59,7 @@ namespace UI {
             );
         }
 
+        // Format time with respect to a second one: +HH:MM:SS
         static std::string formatTime(int time, int reference) {
             int seconds = time - reference;
             int minutes = seconds / 60;
@@ -137,11 +143,11 @@ namespace UI {
     };
 
     class ResultsTable: public Table {
-    const Rally& _rally;
-
     public:
         ResultsTable(const Rally& rally, const Payoff& payoff);
-        void addResult(const DriverTime& result, int pos, bool wasBet);
+
+    private:
+        void addResult(const DriverTime& result, const Rally& rally, int pos, bool wasBet);
     };
 
     class HomeScreen {
@@ -160,11 +166,10 @@ namespace UI {
 
     class ResultsScreen {
     public:
-        const Rally& _rally;
-        const Payoff& _payoff;
-        ResultsTable _table;
-
         ResultsScreen(const Rally& rally, const Payoff& payoff);
         void display() const;
+
+    private:
+        ResultsTable _table;
     };
 }

@@ -19,8 +19,6 @@ struct Payoff {
 
 class Bookmaker {
 public:
-    Bookmaker() = default;
-
     // Create new bet
     [[nodiscard]] Bet makeBet(int amount, const Driver& driver) const;
     // Get the payoff

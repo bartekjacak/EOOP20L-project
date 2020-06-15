@@ -19,6 +19,6 @@ public:
 
     [[nodiscard]] const Driver& getDriver(unsigned long index) const;
 
-    // Performs a simulation using simulator and returns finished edition
+    // Performs a simulation using simulator
     void perform(Simulator simulator);
 };
