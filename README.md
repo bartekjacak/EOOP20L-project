@@ -1,10 +1,13 @@
 # Monte Carlo Betting Simulator
 ![CI](https://github.com/bartekjacak/EOOP20L-project/workflows/CI/badge.svg)
 
-Description of the project is available [here](https://github.com/bartekjacak/EOOP20L-project/blob/master/doc/preliminary.md). 
-Some parts might be out of date as there were a few changes done into the codebase.
+![Home screen](./doc/homeScreen.png)
 
-To build and run the project use CLion or run the following command:
+![Results screen](./doc/resultsScreen.png)
+
+Description of the project is available [here](https://github.com/bartekjacak/EOOP20L-project/blob/master/doc/final.md).
+
+Build and run the project using CLion or with the following command:
 ```sh
 $ ./build.sh && ./run.sh
 ```
